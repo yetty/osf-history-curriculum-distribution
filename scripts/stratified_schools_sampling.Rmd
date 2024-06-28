@@ -1,0 +1,229 @@
+---
+title: "Stratified Random Sampling of Schools"
+author: "Juda Kaleta"
+date: "2024-06-28"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+if (!requireNamespace("readxl", quietly = TRUE)) {
+  install.packages("readxl")
+}
+if (!requireNamespace("caret", quietly = TRUE)) {
+  install.packages("caret")
+}
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
+if (!requireNamespace("classInt", quietly = TRUE)) {
+  install.packages("classInt")
+}
+if (!requireNamespace("knitr", quietly = TRUE)) {
+  install.packages("knitr")
+}
+if (!requireNamespace("hrbrthemes", quietly = TRUE)) {
+  install.packages("hrbrthemes")
+}
+
+
+library(readxl)
+library(dplyr)
+library(caret)
+library(ggplot2)
+library(classInt)
+library(knitr)
+library(hrbrthemes)
+```
+
+```{r variables, include=FALSE}
+file_path <- "../data/M03 (podzim 2022).xlsx"
+col_total_students_count <- "r03013"
+n_strata <- 3
+```
+
+Our study aims to employ stratified random sampling to select a representative sample of Czech schools at ISCED level 2. The sampling process ensures proportional representation based on school size, determined by the number of students.
+
+# Population Definition
+
+The target population consists of Czech schools at ISCED level 2 that meet the following criteria:
+
+-   The type of the school is `B10` (normal school).
+-   The school is fully organized.
+-   The school had a non-zero number of students in the given year.
+
+```{r get population}
+data <- read_excel(file_path, sheet = "v0322a_1")
+
+population <- data %>%
+  filter(
+    typ == "B10",                          # only normal schools
+    org == 1,                              # only fully organized schools
+    !!sym(col_total_students_count) > 0,   # filter out empty schools
+  )
+```
+
+The table below provides a summary of the target population of schools based on the given criteria.
+
+```{r population summary}
+summary_population <- population %>%
+  summarize(
+    total_schools = n(),
+    min_students = min(!!sym(col_total_students_count)),
+    max_students = max(!!sym(col_total_students_count)),
+    mean_students = mean(!!sym(col_total_students_count)),
+    median_students = median(!!sym(col_total_students_count))
+  )
+
+kable(summary_population, caption = "Summary of the Target Population")
+```
+
+The histogram below shows the distribution of the number of students in the target population of schools.
+
+```{r population histogram}
+# Create a histogram of the number of students in schools
+ggplot(population, aes(x = !!sym(col_total_students_count))) +
+  geom_histogram(binwidth = 50, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Number of Students in Schools",
+       x = "Number of Students",
+       y = "Frequency") +
+  theme_ipsum()
+```
+
+# Stratification Criteria
+
+The stratified sample is selected based on school size (number of students). Schools are divided into `r n_strata` groups using Jenks natural breaks. This method optimally partitions the data into homogeneous groups, ensuring that each stratum contains schools with similar sizes.
+
+```{r jenks breaks}
+jenks_breaks <- classIntervals(population[[col_total_students_count]], n = n_strata, style = "jenks")
+breaks <- jenks_breaks$brks
+```
+
+To assign each school to a corresponding stratum based on the Jenks breaks, we create a new column in the population dataset.
+
+```{r add strata to population}
+# Create a new column for strata based on the breaks
+population <- population %>%
+  mutate(
+    strata = cut(
+      !!sym(col_total_students_count), 
+      breaks = breaks, 
+      include.lowest = TRUE, 
+      labels = (seq_along(breaks) - 1)[-1]
+    )
+  )
+```
+
+We can then summarize the population within each stratum to understand the distribution of school sizes across the different strata.
+
+```{r summarize strata}
+summary_population_strata <- population %>%
+  group_by(strata) %>%
+  summarize(
+    total_schools = n(),
+    min_students = min(!!sym(col_total_students_count)),
+    max_students = max(!!sym(col_total_students_count)),
+    mean_students = mean(!!sym(col_total_students_count)),
+    median_students = median(!!sym(col_total_students_count))
+  )
+
+kable(summary_population_strata, caption = "Summary of the Target Population by Strata")
+```
+
+To visualize the distribution of the number of students in schools and the resulting Jenks breaks, we create a histogram with the break points indicated.
+
+```{r visualize strata}
+ggplot(population, aes(x = !!sym(col_total_students_count))) +
+  geom_histogram(binwidth = 50, fill = "blue", color = "black", alpha = 0.7) +
+  geom_vline(xintercept = breaks, linetype = "dashed", color = "red") +
+  labs(title = "Distribution of Number of Students in Schools with Jenks Breaks",
+       x = "Number of Students",
+       y = "Frequency") +
+  theme_ipsum()
+```
+
+
+# Sample Size Determination
+
+To determine the appropriate sample size, we use Cochran's equation. This method provides a way to calculate a statistically valid sample size based on the desired confidence level, margin of error, and estimated proportion of the population.
+
+```{r cochrans equation}
+cochran_sample_size <- function(population_size, confidence_level = 0.95, margin_of_error = 0.05, estimated_proportion = 0.5) {
+  # Calculate Z-value for the desired confidence level
+  z_value <- qnorm(1 - (1 - confidence_level) / 2)
+  
+  # Calculate Cochran's sample size
+  n_0 <- (z_value^2 * estimated_proportion * (1 - estimated_proportion)) / (margin_of_error^2)
+  
+  # Adjust sample size for finite population
+  sample_size <- n_0 / (1 + (n_0 - 1) / population_size)
+  
+  return(round(sample_size))
+}
+```
+
+
+Next, we calculate the total sample size needed for our study using the function defined above.
+
+```{r compute total sample size}
+population_size <- nrow(population)
+total_sample_size <- cochran_sample_size(population_size)
+```
+
+The total sample size required is `r total_sample_size` schools. We then compute the sample size for each stratum to ensure proportional representation.
+
+```{r compute strata sample size}
+strata_sample_sizes <- population %>%
+  group_by(strata) %>%
+  summarize(
+    stratum_size = n(),
+    stratum_sample_size = round((stratum_size / population_size) * total_sample_size)
+  )
+
+population <- population %>%
+  left_join(strata_sample_sizes, by = "strata")
+
+kable(strata_sample_sizes, caption = "Sample Sizes for Each Stratum")
+```
+
+
+# Sampling Procedure
+
+This section details the process of randomly selecting schools for each stratum, saving the sampled data, visualizing the results, and validating the sample. 
+
+We use stratified random sampling to select schools within each stratum based on the predetermined sample sizes.
+
+```{r get random sample}
+set.seed(123)  # For reproducibility
+sampled_schools <- population %>%
+  group_by(strata) %>%
+  group_modify(~ slice_sample(.x, n = min(.x$stratum_sample_size[1], nrow(.x))))
+```
+
+We save the sampled schools to an RData file for future analysis and reference.
+
+```{r save sample}
+save(sampled_schools, file = "../outcomes/sampled_schools.RData")
+``` 
+
+We visualize the distribution of the number of students in both the sampled schools and the entire population to compare their distributions.
+
+```{r visualize distribution}
+# Combine population and sampled schools for visualization
+population$group <- "Population"
+sampled_schools$group <- "Sampled"
+
+combined_data <- bind_rows(population, sampled_schools)
+
+# Plot histogram
+ggplot(combined_data, aes(x = !!sym(col_total_students_count), fill = group)) +
+  geom_histogram(position = "identity", alpha = 0.6, binwidth = 50) +
+  labs(title = "Comparison of Number of Students Distribution",
+       x = "Number of Students",
+       y = "Frequency") +
+  scale_fill_manual(values = c("Population" = "blue", "Sampled" = "red")) +
+  theme_ipsum()
+```
