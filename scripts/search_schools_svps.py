@@ -7,8 +7,11 @@ import os
 # Set your OpenAI API key
 openai.api_key = 'your_openai_api_key'
 
-SCHOOLS_LIST_FILE_PATH = '../data/schools.csv'
+SCHOOLS_LIST_FILE_PATH = '../outcomes/sampled_schools.csv'
 DOWNLOAD_FOLDER_PATH = '../data/SVPs'
+
+# Ensure the download folder exists
+os.makedirs(DOWNLOAD_FOLDER_PATH, exist_ok=True)
 
 
 def search_svps(school_name, address):
@@ -42,23 +45,36 @@ def check_izo_in_pdf(filename, izo_code):
 
 def main(csv_file):
     schools_df = pd.read_csv(csv_file)
+    schools_df['status'] = ''  # Add a new column for status
 
     for index, row in schools_df.iterrows():
-        school_name = row['school_name']
-        address = row['address']
-        izo_code = row['izo_code']
+        school_name = row['zar_nazev']
+        address = f"{row['ulice']}, {row['misto']}"
+        izo_code = str(row['izo'])  # Ensure IZO code is a string
 
-        svp_url = search_svps(school_name, address)
+        try:
+            svp_url = search_svps(school_name, address)
 
-        if svp_url:
-            filename = f"{DOWNLOAD_FOLDER_PATH}/{izo_code}.pdf"
-            download_file(svp_url, filename)
+            if svp_url:
+                filename = f"{DOWNLOAD_FOLDER_PATH}/{izo_code}.pdf"
+                download_file(svp_url, filename)
 
-            if check_izo_in_pdf(filename, izo_code):
-                print(f"Correct ŠVP found for {school_name}. Downloaded file: {filename}")
+                if check_izo_in_pdf(filename, izo_code):
+                    print(f"Correct ŠVP found for {school_name}. Downloaded file: {filename}")
+                    schools_df.at[index, 'status'] = 'downloaded'
+                else:
+                    print(f"ŠVP found for {school_name} does not contain the correct IZO code.")
+                    schools_df.at[index, 'status'] = 'invalid izo'
+                    os.remove(filename)
             else:
-                print(f"ŠVP found for {school_name} does not contain the correct IZO code.")
-                os.remove(filename)
+                print(f"No ŠVP URL found for {school_name}.")
+                schools_df.at[index, 'status'] = 'not found'
+        except Exception as e:
+            print(f"Error processing {school_name}: {e}")
+            schools_df.at[index, 'status'] = 'error'
+
+    # Save the updated DataFrame back to the CSV file
+    schools_df.to_csv(csv_file, index=False)
 
 
 if __name__ == "__main__":
