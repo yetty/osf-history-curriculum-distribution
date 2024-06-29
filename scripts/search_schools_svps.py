@@ -43,11 +43,21 @@ def check_izo_in_pdf(filename, izo_code):
     return False
 
 
-def main(csv_file):
+def main(csv_file, limit=10):
     schools_df = pd.read_csv(csv_file)
-    schools_df['status'] = ''  # Add a new column for status
+
+    if 'status' not in schools_df.columns:
+        schools_df['status'] = ''  # Add a new column for status if not present
+
+    processed_count = 0
 
     for index, row in schools_df.iterrows():
+        if processed_count >= limit:
+            break
+
+        if row.get('status', '') == 'downloaded':
+            continue
+
         school_name = row['zar_nazev']
         address = f"{row['ulice']}, {row['misto']}"
         izo_code = str(row['izo'])  # Ensure IZO code is a string
@@ -72,6 +82,8 @@ def main(csv_file):
         except Exception as e:
             print(f"Error processing {school_name}: {e}")
             schools_df.at[index, 'status'] = 'error'
+
+        processed_count += 1
 
     # Save the updated DataFrame back to the CSV file
     schools_df.to_csv(csv_file, index=False)
