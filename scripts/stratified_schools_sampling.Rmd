@@ -207,6 +207,12 @@ We save the sampled schools to an RData file for future analysis and reference.
 
 ```{r save sample}
 save(sampled_schools, file = "../outcomes/sampled_schools.RData")
+
+# Save the sampled schools to a CSV file, including only specified columns
+csv_export_columns <- sampled_schools %>%
+  select(strata, izo, zar_nazev, ulice, misto)
+
+write.csv(csv_export_columns, file = "../outcomes/sampled_schools.csv", row.names = FALSE)
 ``` 
 
 We visualize the distribution of the number of students in both the sampled schools and the entire population to compare their distributions.
