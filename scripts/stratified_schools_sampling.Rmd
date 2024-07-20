@@ -3,8 +3,8 @@ title: "Stratified Random Sampling of Schools"
 author: "Juda Kaleta"
 date: "2024-06-28"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -40,8 +40,8 @@ library(hrbrthemes)
 ```
 
 ```{r variables, include=FALSE}
-file_path <- "../data/M03 (podzim 2022).xlsx"
-col_total_students_count <- "r03013"
+file_path <- "../data/m0324J.xlsx"
+col_total_students_count <- "R03013"
 n_strata <- 3
 ```
 
@@ -56,11 +56,11 @@ The target population consists of Czech schools at ISCED level 2 that meet the f
 -   The school had a non-zero number of students in the given year.
 
 ```{r get population}
-data <- read_excel(file_path, sheet = "v0322a_1")
+data <- read_excel(file_path, sheet = "v0324jc1")
 
 population <- data %>%
   filter(
-    typ == "B10",                          # only normal schools
+    TYP == "B10",                          # only normal schools
     org == 1,                              # only fully organized schools
     !!sym(col_total_students_count) > 0,   # filter out empty schools
   )
@@ -210,7 +210,7 @@ save(sampled_schools, file = "../outcomes/sampled_schools.RData")
 
 # Save the sampled schools to a CSV file, including only specified columns
 csv_export_columns <- sampled_schools %>%
-  select(strata, izo, zar_nazev, ulice, misto)
+  select(strata, izo, zar_naz, ulice, misto)
 
 write.csv(csv_export_columns, file = "../outcomes/sampled_schools.csv", row.names = FALSE)
 ``` 

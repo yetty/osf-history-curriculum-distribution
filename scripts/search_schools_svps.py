@@ -1,95 +1,85 @@
-from dotenv import load_dotenv
-from openai import OpenAI
 import requests
-import fitz  # PyMuPDF
 import pandas as pd
 import os
+from urllib.parse import urlparse
+from dotenv import load_dotenv
 
 load_dotenv()
 
-SCHOOLS_LIST_FILE_PATH = '../outcomes/sampled_schools.csv'
-DOWNLOAD_FOLDER_PATH = '../data/SVPs'
-
-# Ensure the download folder exists
-os.makedirs(DOWNLOAD_FOLDER_PATH, exist_ok=True)
-
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-
-def search_svps(school_name, address):
-    response = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": f"Find the 'ŠVP' document for the school '{school_name}' located at '{address}'. "
-                           f"Provide the URL of the PDF file only if available.",
-            }
-        ],
-        model="gpt-35-turbo-0613",
-        seed=123,
-        max_tokens=200,
-        temperature=0,
-    )
-    return response.choices[0].message.content.strip()
+BING_API_KEY = os.environ['BING_SEARCH_V7_SUBSCRIPTION_KEY']
+BING_ENDPOINT = "https://api.bing.microsoft.com/v7.0/search"
 
 
-def download_file(url, filename):
-    response = requests.get(url)
-    with open(filename, 'wb') as file:
-        file.write(response.content)
+def find_svp_pdf(row):
+    query = f"site:{row['website']} \"školní vzdělávací program\" \"základní vzdělávání\" \"Učební osnovy\" \"Učební plán\" filetype:pdf"
+    headers = {"Ocp-Apim-Subscription-Key": BING_API_KEY}
+    params = {"q": query, "textDecorations": True, "textFormat": "HTML"}
+
+    response = requests.get(BING_ENDPOINT, headers=headers, params=params)
+    response.raise_for_status()
+    search_results = response.json()
+
+    if 'webPages' in search_results:
+        for result in search_results['webPages']['value']:
+            url = result['url']
+            if url.endswith('.pdf'):
+                return url
+
+    query = f"{row['izo']} \"{row['zar_nazev']}\" \"{row['ulice']}\" \"{row['misto']}\" \"školní vzdělávací program\" \"základní vzdělávání\" \"Učební osnovy\" \"Učební plán\" filetype:pdf"
+    params = {"q": query, "textDecorations": True, "textFormat": "HTML"}
+
+    response = requests.get(BING_ENDPOINT, headers=headers, params=params)
+    response.raise_for_status()
+    search_results = response.json()
+
+    if 'webPages' in search_results:
+        for result in search_results['webPages']['value']:
+            url = result['url']
+            if url.endswith('.pdf'):
+                return url
+    return None
 
 
-def check_izo_in_pdf(filename, izo_code):
-    with fitz.open(filename) as pdf_document:
-        for page_num in range(min(5, len(pdf_document))):
-            page = pdf_document.load_page(page_num)
-            text = page.get_text()
-            if izo_code in text:
-                return True
-    return False
+def process_school(row):
+    if not pd.notna(row['svp_bing_found']) or row['svp_bing_found'] is False:
+        print(f"Processing school: {row['zar_nazev']} (IZO: {row['izo']})")
+        try:
+            svp_pdf = find_svp_pdf(row)
+            print(f"Found SVP PDF: {svp_pdf}" if svp_pdf else "SVP PDF not found")
+            return svp_pdf
+        except Exception as e:
+            print(f"Error processing school: {row['zar_nazev']} (IZO: {row['izo']}) - {e}")
+            return None
+    else:
+        print(f"Skipping: {row['zar_nazev']} (IZO: {row['izo']})")
+        return None
 
 
-def main(csv_file, limit=10):
-    schools_df = pd.read_csv(csv_file)
+# Load the CSV file
+schools = pd.read_csv('../outcomes/sampled_schools.csv')
 
-    if 'status' not in schools_df.columns:
-        schools_df['status'] = ''  # Add a new column for status if not present
+# Ensure 'svp_pdf' column exists
+if 'svp_pdf' not in schools.columns:
+    schools['svp_pdf'] = None
+if 'svp_bing_found' not in schools.columns:
+    schools['svp_bing_found'] = None
 
-    processed_count = 0
-
-    for index, row in schools_df.iterrows():
-        if processed_count >= limit:
-            break
-
-        if not row.get('status', '') in ['', 'error']:
-            continue
-
-        school_name = row['zar_nazev']
-        address = f"{row['ulice']}, {row['misto']}"
-        izo_code = str(row['izo'])  # Ensure IZO code is a string
-
-        print(f"{processed_count}: search for {school_name}, {address}")
-        svp_url = search_svps(school_name, address)
-
-        if svp_url:
-            print(f"Found url: {svp_url}")
-            filename = f"{DOWNLOAD_FOLDER_PATH}/{izo_code}.pdf"
-            download_file(svp_url, filename)
-
-            if check_izo_in_pdf(filename, izo_code):
-                print(f"Correct ŠVP found for {school_name}. Downloaded file: {filename}")
-                schools_df.at[index, 'status'] = 'downloaded'
-            else:
-                print(f"ŠVP found for {school_name} does not contain the correct IZO code.")
-                schools_df.at[index, 'status'] = 'invalid izo'
-        else:
-            print(f"No ŠVP URL found for {school_name}.")
-            schools_df.at[index, 'status'] = 'not found'
-
-        processed_count += 1
-
-    # Save the updated DataFrame back to the CSV file
-    schools_df.to_csv(csv_file, index=False)
+# Limit the number of rows processed
+limit = 400
+schools_limited = schools.head(limit)
 
 
-if __name__ == "__main__":
-    main(SCHOOLS_LIST_FILE_PATH)
+# Process each school and save the CSV file after each 10 rows
+for i, row in schools_limited.iterrows():
+    svp_pdf = process_school(row)
+    schools.at[i, 'svp_bing_found'] = svp_pdf is not None
+    schools.at[i, 'svp_pdf'] = svp_pdf
+
+    if (i + 1) % 10 == 0:
+        print(f"Saving CSV file after processing {i + 1} rows")
+        schools.to_csv('../outcomes/sampled_schools.csv', index=False)
+
+# Save the final results
+schools.to_csv('../outcomes/sampled_schools.csv', index=False)
+
+print("Script completed.")
