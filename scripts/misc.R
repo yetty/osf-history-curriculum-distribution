@@ -87,3 +87,10 @@ p2 <- ggplot(svps_found_per_stratum, aes(x = factor(strata, levels = c("1", "2",
     panel.background = element_rect(fill = "white", color = NA),
   )
 ggsave("svp.png", plot=p2, width=10, height=6)
+
+
+
+library(openxlsx)
+file_path <- 'outcomes/sampled_schools.csv'
+sampled_schools <- read.csv(file_path)
+write.xlsx(sampled_schools, file = 'outcomes/sampled_schools.xlsx')
