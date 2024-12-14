@@ -188,36 +188,45 @@ def process_grade(school, grade, ucivo, note=None):
         if not ucivo:
             return
 
-        completion = openai.beta.chat.completions.parse(
-            model="gpt-4o",
-            messages=[
-                {
-                    "role": "system",
-                    "content": PROMPT,
-                },
-                {
-                    "role": "system",
-                    "content": PROMPT_ROCNIKY.get(
-                        grade,
-                        "`blok_rvp` a `tema_rvp` nejsou definovány pro tento ročník, nech je prazdne",
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": "\n".join(ucivo),
-                },
-            ],
-            response_format=Ucivo,
-            temperature=0.01,
+        ucivo_parts = [ucivo[i : i + 20] for i in range(0, len(ucivo), 20)]
+
+        print(
+            f"Items: {len(ucivo)} / length: {len(' '.join(ucivo))} / parts: {len(ucivo_parts)}"
         )
 
-        items = completion.choices[0].message.parsed
-        print(f"Items: {len(items.ucivo)}")
+        for j, part in enumerate(ucivo_parts):
+            print(f"Processing part {j+1}/{len(ucivo_parts)}")
 
-        for item in items.ucivo:
-            writer.writerow(
-                [school, grade, note, item.ucivo, item.blok_rvp, item.tema_rvp]
+            completion = openai.beta.chat.completions.parse(
+                model="gpt-4o",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": PROMPT,
+                    },
+                    {
+                        "role": "system",
+                        "content": PROMPT_ROCNIKY.get(
+                            grade,
+                            "`blok_rvp` a `tema_rvp` nejsou definovány pro tento ročník, nech je prazdne",
+                        ),
+                    },
+                    {
+                        "role": "user",
+                        "content": "\n".join(part),
+                    },
+                ],
+                response_format=Ucivo,
+                temperature=0.01,
             )
+
+            items = completion.choices[0].message.parsed
+            print(f"Items: {len(items.ucivo)}")
+
+            for item in items.ucivo:
+                writer.writerow(
+                    [school, grade, note, item.ucivo, item.blok_rvp, item.tema_rvp]
+                )
 
 
 with open("data/ucivo.txt", "r") as file:
