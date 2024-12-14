@@ -198,7 +198,7 @@ def process_grade(school, grade, ucivo, note=None):
             print(f"Processing part {j+1}/{len(ucivo_parts)}")
 
             completion = openai.beta.chat.completions.parse(
-                model="gpt-4o",
+                model="gpt-4o-mini-2024-07-18",
                 messages=[
                     {
                         "role": "system",
@@ -236,7 +236,7 @@ with open("data/ucivo.txt", "r") as file:
     note = None
     tmp_ucivo = []
 
-    start_line = 25596
+    start_line = 0
 
     for i, line in enumerate(lines[start_line:]):
         l = line.strip()
