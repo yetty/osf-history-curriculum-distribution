@@ -1,0 +1,93 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Jireček%
+}{%
+Jireček%
+}{%
+{\protect \APACyear {2023}}%
+{\protect \APACexlab {{\protect \BCnt {1}}}}}]{%
+Jirecek2023Promeny}
+\APACinsertmetastar {%
+Jirecek2023Promeny}%
+\begin{APACrefauthors}%
+Jireček, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023{\protect \BCnt {1}}}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Proměny výuky dějepisu pohledem analýzy školních vzdělávacích programů} {Proměny výuky dějepisu pohledem analýzy školních vzdělávacích programů}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Historie -- otázky -- problémy}{12}{}{17-38}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Jireček%
+}{%
+Jireček%
+}{%
+{\protect \APACyear {2023}}%
+{\protect \APACexlab {{\protect \BCnt {2}}}}}]{%
+Jirecek2023Tricet}
+\APACinsertmetastar {%
+Jirecek2023Tricet}%
+\begin{APACrefauthors}%
+Jireček, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023{\protect \BCnt {2}}}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Třicet let od sametové revoluce (1989-2019) pohledem kurikulárních dokumentů dějepisu} {Třicet let od sametové revoluce (1989-2019) pohledem kurikulárních dokumentů dějepisu}.{\BBCQ}
+\newblock
+\BIn{} J.~Mihola\ (\BED), \APACrefbtitle {Třicet let svobody, aneb demokracie není samozřejmost.} {Třicet let svobody, aneb demokracie není samozřejmost.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Labischová%
+\ \BBA {} Gracová%
+}{%
+Labischová%
+\ \BBA {} Gracová%
+}{%
+{\protect \APACyear {2016}}%
+}]{%
+Gracova2015Problems}
+\APACinsertmetastar {%
+Gracova2015Problems}%
+\begin{APACrefauthors}%
+Labischová, D.%
+\BCBT {}\ \BBA {} Gracová, B.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2016}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Problems of school history teaching in the current education system of the {Czech Republic}} {Problems of school history teaching in the current education system of the {Czech Republic}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Klio - Czasopismo Poświęcone Dziejom Polski i Powszechnym}{34}{}{63}.
+\newblock
+\begin{APACrefURL} \url{https://doi.org/10.12775/klio.2015.029} \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.12775/klio.2015.029} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+\APACcitebtitle {Rámcový vzdělávací program pro základní vzdělávání}}{%
+\APACcitebtitle {Rámcový vzdělávací program pro základní vzdělávání}}{%
+{\protect \APACyear {2023}}%
+}]{%
+RVPZV2023}
+\APACinsertmetastar {%
+RVPZV2023}%
+\APACrefbtitle {Rámcový vzdělávací program pro základní vzdělávání.} {Rámcový vzdělávací program pro základní vzdělávání.}
+\newblock
+\APACrefYearMonthDay{2023}{}{}.
+\newblock
+\APACaddressPublisher{}{MŠMT}.
+\newblock
+\begin{APACrefURL} [{2024-12-17}]\url{https://www.edu.cz/wp-content/uploads/2023/07/RVP\_ZV\_2023\_cista\_verze.pdf} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

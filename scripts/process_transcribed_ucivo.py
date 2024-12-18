@@ -183,7 +183,9 @@ def process_grade(school, grade, ucivo, note=None):
 
         print(f"Processing {school} {grade} ({note})")
 
-        writer.writerow([school, grade, note, "", "", ""])
+        if grade and ucivo:
+            writer.writerow([school, grade, note, " - ".join(ucivo)])
+        return
 
         if not ucivo:
             return
