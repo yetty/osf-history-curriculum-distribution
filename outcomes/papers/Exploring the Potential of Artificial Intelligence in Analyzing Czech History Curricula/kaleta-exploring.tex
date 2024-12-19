@@ -24,6 +24,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
 
+
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
@@ -36,17 +37,18 @@
 
 % \articletype{ARTICLE TEMPLATE}% Specify the article type or omit as appropriate
 
-\title{Exploring the Potential of Artificial Intelligence in Analyzing Czech History Curricula}
+\title{Evaluating the Potential using LLMs for Thematic Analysis of Czech History Curricula}
 
 \author{
 \name{Juda Kaleta\textsuperscript{a}\thanks{CONTACT Juda Kaleta. Email: juda.kaleta@gmail.com}}
 \affil{\textsuperscript{a} PhD student of Institute of Czech History, Faculty of Arts, Charles University, Prague, Czech Republic}
 }
 
+
 \maketitle
 
 \begin{abstract}
-Analysing Czech school curricula is challenging due to their inconsistent structure, layout, and terminology. This study explores the potential of AI to address these challenges, using History content as a case study. We evaluated AI's ability to (a) extract relevant data from curricula, (b) categorise historical content into coherent topics, and (c) assign appropriate historical era labels to each topic.
+Analysing Czech school curricula is challenging due to their inconsistent structure, layout, and terminology. This study explores the potential of LLM to address these challenges, using History content as a case study. We evaluated LLM's ability to (a) extract relevant data from curricula, (b) categorise historical content into coherent topics, and (c) assign appropriate historical era labels to each topic.
 
 %% main findings %%
 \end{abstract}
@@ -64,9 +66,18 @@ Educational data extraction
 
 \section{Introduction}
 
+% write about curricular studies more focused on qualitative than quantitative research
+% mention thematic analysis as a standard form of analysing this form of documents
+% mention parts of thematic analysis based on Braun2006Using and state what parts I want to support
+% describe my dataset and the need of analysing it in the Czech context regarded to revision of curricula
+
+
+
+
 \subsection{Context and Background}
 
 todo: link osf project https://osf.io/53k9b/
+\cite{Braun2006Using}
 
 %% Introduce current situation in the Czech Republic with ongoing revision of national curriculum for primary schools. Provide a bit more context about the revision process. For example, explain why the curriculum is being revised (e.g., new educational goals, alignment with modern teaching standards). Mention the timeframe or scope of the revision (if relevant). %%
 
@@ -88,31 +99,37 @@ However, as \cite{Jirecek2023Promeny} states, teachers adopted the new curricula
 
 \subsection{Objective}
 
-%% State the primary aim of the paper: quantitatively evaluating AI’s performance in topic splitting and labeling compared to human researchers. %%
+%% State the primary aim of the paper: quantitatively evaluating LLM’s performance in topic splitting and labeling compared to human researchers. %%
 
-Given the complexity of Czech school curricula and the lack of systematic post-implementation analysis tools, this study aims to...
+Given the complexity of Czech school curricula and the lack of systematic post-implementation analysis tools, this study aims to evaluate the potential of using LLMs in supporting specific stages of thematic analysis in school curricula, we formulated the following research questions:
 
-%% Briefly mention why comparing AI performance quantitatively (rather than qualitatively) is a critical contribution, e.g., scalability, replicability, or objectivity. %% 
+\begin{description}
+	\item[(RQ1)] How effectively can an LLM extract history-related content from diverse school curricula?  
+    \item[(RQ2)] To what extent can an LLM identify and distinguish distinct history content topics compared to a human coder?  
+    \item[(RQ3)] How accurately can an LLM label school curricula content using predefined codes derived from the Czech National Curriculum?  
+\end{description}
+
+%% Briefly mention why comparing LLM performance quantitatively (rather than qualitatively) is a critical contribution, e.g., scalability, replicability, or objectivity. %% 
 
 \subsection{Scope}
 
-%% Outline the focus on evaluating GPT-4o and GPT-4o-mini for topic splitting and labeling. Briefly note (without diving into detail) that the focus is limited to history curricula and specific AI tasks (splitting and labeling). %%
+%% Outline the focus on evaluating GPT-4o and GPT-4o-mini for topic splitting and labeling. Briefly note (without diving into detail) that the focus is limited to history curricula and specific LLM tasks (splitting and labeling). %%
 
 %% Emphasize the importance of creating a reliable method for comparing diverse school curricula. %%
 
 %% Mention problem of missing analysis - nobody will be able to assess differences after implementing the new curriculum (even if the goal is to lower amount of topics and go deeper.) %%
 
-%% Highlight the potential of AI in automating curriculum analysis and the research gap this study addresses. Explain why the lack of analysis is a significant issue. Elaborate on the potential consequences, e.g., how the absence of systematic comparisons could hinder policymakers or educators in evaluating the revision's success. Highlight why this makes the automation of analysis an appealing solution. %%
+%% Highlight the potential of LLM in automating curriculum analysis and the research gap this study addresses. Explain why the lack of analysis is a significant issue. Elaborate on the potential consequences, e.g., how the absence of systematic comparisons could hinder policymakers or educators in evaluating the revision's success. Highlight why this makes the automation of analysis an appealing solution. %%
 
 
 \section{Literature Review}
 
-%% Applications of AI in analyzing educational data worldwide, including text classification, curriculum analysis, and policy evaluation. %%
+The application of large language models (LLMs) in \textit{thematic analysis} has shown promising results. \cite{DePaoli2023Can,DePaoli2024Thematic} and \cite{DePaoli2024Reflections} demonstrated that GPT-3.5 could perform thematic analysis on semistructured interviews, including those in non-English languages, with results comparable to human researchers. Similarly, \citet{Drapal2023Using} successfully applied LLMs to generate and assign thematic codes for Czech criminal court opinions. Despite these successes, researchers consistently caution against the unsupervised use of LLMs. The consensus is that LLMs should complement, not replace, human analysis, particularly in tasks requiring cultural or linguistic nuance. 
+
+%% Applications of LLM in analyzing educational data worldwide, including text classification, curriculum analysis, and policy evaluation. %%
 
 
-%% Overview of the Czech context, emphasizing the lack of AI integration in educational research and curriculum studies. %% 
-
-%% Challenges in analyzing unstructured Czech curricula. Existing research. %% 
+%% Overview of thematic analysis in curricular research + Czech curricular research %% 
 
 
 \cite{Jirecek2023Tricet, Jirecek2023Promeny} analysed the position of history education within the school curricula of general secondary schools (ISCED 2) following minor changes to the national curriculum. He examined 200 school curricula that were publicly accessible online through school websites. His research questions focused on: 
@@ -126,7 +143,7 @@ Given the complexity of Czech school curricula and the lack of systematic post-i
 His findings provide valuable insights into the updated allocation of history lessons and reveal a significant overloading of the final grade with extensive content related to modern history. However, his findings are limited to schools with publicly accessible curricula. In our findings, we show that many schools are unwilling to share their curricula, and selecting only an easily accessible population of curricula may lead to biased input data. Schools that share their curricula tend to be more modern and open-minded in their approach, whereas those unwilling to do so are often more rigorous and conservative. This discrepancy may distort interpretations of curriculum implementation and innovation.
 
 
-%% Performance evaluation methods for AI compared to human expertise in similar tasks. Metrics and approaches for evaluating AI performance (e.g., Precision, Recall, F1-score, Cohen’s Kappa). %% 
+%% Performance evaluation methods for LLM compared to human expertise in similar tasks. Metrics and approaches for evaluating LLM performance (e.g., Precision, Recall, F1-score, Cohen’s Kappa). %% 
 
 
 %% Position your study within this context, highlighting its novelty. %% 
@@ -191,24 +208,24 @@ No Response & $10$ & $3.00\%$ \\ \midrule
 Schools provide curricula in various formats (e.g., PDF, HTML, DOCX, DOC, XLSX), often separated by subjects or grades across multiple files. To standardize the input data, we converted all curricula into PDF format, combining multiple files when necessary.
 
 
-\subsection{Human and AI Coding Processes}
+\subsection{Human and LLM Coding Processes}
 
-The goal of this study was twofold: (1) to validate AI as a viable alternative to human coders for analyzing school curricula, and (2) to identify its limitations and highlight specific contexts in which AI can be effectively applied. To achieve this, we evaluated AI performance on three tasks:  
+The goal of this study was twofold: (1) to validate LLM as a viable alternative to human coders for analyzing school curricula, and (2) to identify its limitations and highlight specific contexts in which LLM can be effectively applied. To achieve this, we evaluated LLM performance on three tasks:  
 \begin{enumerate}
     \item extracting relevant history content from school curricula PDFs,  
     \item splitting extracted content into discrete topics, and  
     \item labeling topics into broader historical themes aligned with the Czech National Curriculum.  
 \end{enumerate}
 
-We compared AI outputs with those produced by a human coder, who served as the benchmark. The human coder was an experienced lower-secondary history teacher familiar with Czech school curricula structure, terminology, and content.
+We compared LLM outputs with those produced by a human coder, who served as the benchmark. The human coder was an experienced lower-secondary history teacher familiar with Czech school curricula structure, terminology, and content.
 
-For AI processing, we utilized two versions of GPT-4: \texttt{gpt-4o-2024-08-06} and \texttt{gpt-4o-mini-2024-07-18}. These models were selected due to GPT-4's widespread popularity and accessibility. The \texttt{gpt-4o-mini} version offered faster processing and lower costs but operated with a smaller contextual window compared to the full version. This tradeoff is discussed further in the results section.
+For LLM processing, we utilized two versions of GPT-4: \texttt{gpt-4o-2024-08-06} and \texttt{gpt-4o-mini-2024-07-18}. These models were selected due to GPT-4's widespread popularity and accessibility. The \texttt{gpt-4o-mini} version offered faster processing and lower costs but operated with a smaller contextual window compared to the full version. This tradeoff is discussed further in the results section.
 
-We evaluated AI performance based on the following criteria:  
+We evaluated LLM performance based on the following criteria:  
 \begin{enumerate}
-    \item \textbf{Accuracy}: How closely AI outputs aligned with human-coded results.  
-    \item \textbf{Processing time}: Measured as the total runtime of the AI processing scripts.  
-    \item \textbf{Cost}: Derived directly from OpenAI’s administrative console based on token usage.  
+    \item \textbf{Accuracy}: How closely LLM outputs aligned with human-coded results.  
+    \item \textbf{Processing time}: Measured as the total runtime of the LLM processing scripts.  
+    \item \textbf{Cost}: Derived directly from OpenLLM’s administrative console based on token usage.  
 \end{enumerate}
 
 The following subsections describe each of the three tasks in detail, including the methods applied and the criteria for evaluation.
@@ -221,7 +238,7 @@ Due to the absence of a unified format for Czech school curricula, we encountere
     \item To extract the relevant content for each grade level.  
 \end{enumerate}
 
-Both the AI models and the human coder were tasked with examining each document, locating the \textit{History} section, and systematically extracting and categorizing all relevant content by grade. These extracted content chunks were later used in subsequent processes, such as topic splitting and labeling.
+Both the LLM models and the human coder were tasked with examining each document, locating the \textit{History} section, and systematically extracting and categorizing all relevant content by grade. These extracted content chunks were later used in subsequent processes, such as topic splitting and labeling.
 
 This step was anticipated to be the most challenging in the data extraction process. Many curricula lacked a table of contents, making it difficult to efficiently locate the relevant \textit{History} section. Furthermore, the organization and presentation of history content varied significantly between schools. Examples of this variability included:  
 \begin{itemize}
@@ -230,26 +247,26 @@ This step was anticipated to be the most challenging in the data extraction proc
     \item Curricula providing content as narrative paragraphs beneath tables listing expected outcomes.  
 \end{itemize}
 
-These structural differences posed challenges for both the AI models and the human coder, as they had to locate, interpret, and extract consistent information across diverse document formats.  
+These structural differences posed challenges for both the LLM models and the human coder, as they had to locate, interpret, and extract consistent information across diverse document formats.  
 
-To evaluate the quality of the extracted chunks, we planned to compare the outputs of the AI models and the human coder using two key metrics:  
+To evaluate the quality of the extracted chunks, we planned to compare the outputs of the LLM models and the human coder using two key metrics:  
 \begin{itemize}
-    \item \textbf{Total count of extracted chunks}: This metric assesses whether the AI and human coders extracted a similar number of meaningful units.
+    \item \textbf{Total count of extracted chunks}: This metric assesses whether the LLM and human coders extracted a similar number of meaningful units.
     \item \textbf{Character length of extracted chunks}: To evaluate the granularity of extractions, we measured the average and total character lengths of the chunks.
 \end{itemize}
 
-To conduct this comparison, a random sample of extracted chunks was selected for detailed analysis. This sampling ensured a fair and representative evaluation of the AI and human performance in this step of the process.
+To conduct this comparison, a random sample of extracted chunks was selected for detailed analysis. This sampling ensured a fair and representative evaluation of the LLM and human performance in this step of the process.
 
-However, during initial trials of AI processing the school curricula, we identified significant limitations that rendered AI unsuitable for this task without extensive customization. These limitations included:  
+However, during initial trials of LLM processing the school curricula, we identified significant limitations that rendered LLM unsuitable for this task without extensive customization. These limitations included:  
 \begin{itemize}
-    \item \textbf{High costs}: Processing the large PDF files using AI proved financially prohibitive. On average, the school curricula PDFs were $252.23$ pages long (see Figure \ref{figure:pages-distribution-plot} for pages distribution), with an average file size of $2.97$ MB.  
-    \item \textbf{Low extraction accuracy}: AI frequently failed to correctly extract the \textit{History} section of the files. This issue was compounded by the inconsistent organization of the curricula and the lack of a uniform structure across documents.  
+    \item \textbf{High costs}: Processing the large PDF files using LLM proved financially prohibitive. On average, the school curricula PDFs were $252.23$ pages long (see Figure \ref{figure:pages-distribution-plot} for pages distribution), with an average file size of $2.97$ MB.  
+    \item \textbf{Low extraction accuracy}: LLM frequently failed to correctly extract the \textit{History} section of the files. This issue was compounded by the inconsistent organization of the curricula and the lack of a uniform structure across documents.  
 \end{itemize}
 
 \begin{figure} \centering \resizebox*{12cm}{!}{\includegraphics{curricula_pages_distribution_plot.eps}} \caption{Distribution of number of pages of complete school curricula (already extracted History parts have been excluded).} \label{figure:pages-distribution-plot} \end{figure}
 
 
-Addressing these challenges would require advanced preprocessing, fine-tuning of the AI models, the use of vector stores, and the development of extensive custom scripts. As a result, we were unable to compare extracted content chunks between AI and human coders. For the subsequent stages of the project, only the chunks provided by the human coder were used.
+Addressing these challenges would require advanced preprocessing, fine-tuning of the LLM models, the use of vector stores, and the development of extensive custom scripts. As a result, we were unable to compare extracted content chunks between LLM and human coders. For the subsequent stages of the project, only the chunks provided by the human coder were used.
 
 \subsubsection{Topic Splitting}
 
@@ -257,47 +274,50 @@ In order to facilitate a meaningful comparison of school curricula, we needed a 
 
 To address this, we split the content into meaningful units. The human coder was used as the baseline for this task, with instructions to follow traditional topic divisions found in Czech history textbooks when determining what constitutes a single topic unit.
 
-For AI processing, we used a single-shot strategy (TODO: add source on AI prompting strategy) and provided the following prompt in Czech. The English translation is provided here. See the referenced repository (TODO link to repository) for original prompts:
+For LLM processing, we used a single-shot strategy (TODO: add source on LLM prompting strategy) and provided the following prompt in Czech. The English translation is provided here. See the referenced repository (TODO link to repository) for original prompts:
 
 \begin{quotation}
     The user will provide history curriculum content for a primary school, which may contain inconsistent formatting, transcription errors, and other issues. Reformat the content so that each line corresponds to a distinct and meaningful unit, aligned with the curriculum.
 \end{quotation}
 
 
-We let the AI process all school curricula, but because this task would be very time-consuming for the human coder, we decided on a smaller sample, even at the cost of a lower confidence level. We used stratified sampling with grades as individual strata and randomly chose 25 content chunks for each grade, resulting in a total sample of 100 content chunks. With 2,186 extracted chunks from previous steps, using a sample size of 100 chunks provides sufficient confidence for this type of analysis, ensuring representativeness and reliability.
+We let the LLM process all school curricula, but because this task would be very time-consuming for the human coder, we decided on a smaller sample, even at the cost of a lower confidence level. We used stratified sampling with grades as individual strata and randomly chose 25 content chunks for each grade, resulting in a total sample of 100 content chunks. With 2,186 extracted chunks from previous steps, using a sample size of 100 chunks provides sufficient confidence for this type of analysis, ensuring representativeness and reliability.
 
-We compared the performance of the AI models against the human coder’s baseline using F1-score, which measures both precision and recall to evaluate how well the models split topics.
+We compared the performance of the LLM models against the human coder’s baseline using F1-score, which measures both precision and recall to evaluate how well the models split topics.
 
 
 \subsubsection{Topic Labeling}
 
-To evaluate the AI’s ability to label topics, we used predefined labels (referred to as "codes") based on the Czech National Curriculum. Each distinct topic from the school curricula was matched with two labels: one broader history theme label (e.g., '\textit{Earliest Civilizations. Roots of European Culture}') and one more specific topic label (e.g., '\textit{The Oldest Ancient Civilizations...}' or '\textit{Ancient Greece and Rome}'). A complete list of these codes can be found in Appendix \ref{appendix:national-curriculum-topics}. If no predefined label was applicable, the label \textit{other} was used.
+To evaluate the LLM’s ability to label topics, we used predefined labels (referred to as "codes") based on the Czech National Curriculum. Each distinct topic from the school curricula was matched with two labels: one broader history theme label (e.g., '\textit{Earliest Civilizations. Roots of European Culture}') and one more specific topic label (e.g., '\textit{The Oldest Ancient Civilizations...}' or '\textit{Ancient Greece and Rome}'). A complete list of these codes can be found in Appendix \ref{appendix:national-curriculum-topics}. If no predefined label was applicable, the label \textit{other} was used.
 
-Both the human coder and the AI models had access to this coding table. For the AI, we converted the table into a markdown list format to facilitate processing. Both human coder and the AI models used the content chunks generated by the GPT-4 model in the previous step as input for labeling.
+Both the human coder and the LLM models had access to this coding table. For the LLM, the table was converted into a markdown list format to facilitate processing. Both the human coder and the LLM models used the content chunks generated by the GPT-4 model in the previous step as input for labeling. 
 
-The AI was tasked with labeling the entire set of content topics. For human labeling, we used a	 clustered sampling approach to balance representativeness (ensuring a variety of topics) with the goal of minimizing the amount of human processing required. To do this, we first represented each topic as a vector using OpenAI’s \texttt{text-embedding-3-large} model. We then applied a K-means clustering algorithm to group similar topics together. From each cluster, we randomly selected one topic for human labeling. 
+To ensure accurate labeling, additional context was provided for each content chunk. This included information about the grade level and the original content chunk from the school curriculum. By preserving this contextual information, we aimed to help both the human coder and the LLM models better interpret topics that might otherwise appear ambiguous or dependent on their surrounding content.
 
-% TODO: Elaborate on the clustering process. Specifically, we plan to explore how we determined the number of clusters and whether any dimensionality reduction methods were used prior to clustering. 
+To create a manageable dataset for human labeling while ensuring representativeness, we employed a stratified sampling approach. Specifically, we divided the content topics into strata corresponding to the grade levels (grades 6 to 9) and randomly selected 100 topics from each grade, resulting in a total sample of 400 topics. This method ensured that all grade levels were proportionally represented in the evaluation.
 
-The human coder did not have access to the AI's labeling results to ensure the evaluation was unbiased. To assess the agreement between the human and AI labels, we computed Cohen’s Kappa, a statistical measure of inter-rater reliability. Cohen’s Kappa quantifies the level of agreement between two raters (in this case, the human coder and the AI models) while accounting for the possibility of agreement occurring by chance. A higher Kappa value indicates stronger agreement. This measure was applied to evaluate both the broader theme and specific topic labels, helping us assess the consistency of the AI models with the human coder’s labeling.
+The LLM was tasked with labeling the entire set of content topics, while the human coder labeled only the sampled dataset. Importantly, the human coder did not have access to the LLM’s labeling results, ensuring that the evaluation remained unbiased.
+
+To assess the agreement between the human and LLM labels, we computed Cohen’s Kappa, a statistical measure of inter-rater reliability. Cohen’s Kappa accounts for agreement that may occur by chance, providing a robust metric for evaluating labeling consistency. A higher Kappa value indicates stronger agreement. This measure was applied to evaluate both the broader theme and specific topic labels, helping us assess the reliability of the LLM models compared to the human coder.
+
 
 
 %% Topic Splitting and Labeling Process: Topic Splitting: Explain how different curricula formats (e.g., lists, paragraphs, tables) were processed to extract topics. Topic Labeling: Describe the broader and specific Czech national curriculum themes, and how "other" categories were applied. %%
 
 %% Human Coding Process. Manual Topic Extraction and Labeling: Detail how human researchers manually split and labeled topics using textbooks and educational expertise. Inter-rater Reliability: Describe how consistency was ensured between multiple coders. Quality Control: Discuss validation checks and human error mitigation. %%
 
-%% AI Coding Process. Preprocessing: Explain how curricula data was prepared for input into GPT-4o and GPT-4o-mini. Prompt Engineering: Provide examples of prompts used for topic splitting and labeling. AI Labeling: Detail the process followed by GPT-4o and GPT-4o-mini to split and label topics, and any issues encountered during the process. %%
+%% LLM Coding Process. Preprocessing: Explain how curricula data was prepared for input into GPT-4o and GPT-4o-mini. Prompt Engineering: Provide examples of prompts used for topic splitting and labeling. LLM Labeling: Detail the process followed by GPT-4o and GPT-4o-mini to split and label topics, and any issues encountered during the process. %%
 
 %% Sampling Strategy. Stratified Sampling: Justify the use of stratified sampling by grades and schools. Random Sample Selection: Describe how the sample for manual coding and evaluation was selected, ensuring representativeness of diverse curricula. %% 
 
-%% Evaluation Metrics. Topic Splitting: Use of F1-score to evaluate topic splitting performance. Topic Labeling: Use of Cohen’s Kappa for evaluating the agreement between human and AI labeling, and optional use of confusion matrices for deeper insights. %%
+%% Evaluation Metrics. Topic Splitting: Use of F1-score to evaluate topic splitting performance. Topic Labeling: Use of Cohen’s Kappa for evaluating the agreement between human and LLM labeling, and optional use of confusion matrices for deeper insights. %%
 
 
 \section{Results}
 
 
 
-%% Briefly introduce the main goals of the results section: comparing the performance of human coders and AI (GPT-4o and GPT-4o-mini) in terms of topic splitting and labeling. %% 
+%% Briefly introduce the main goals of the results section: comparing the performance of human coders and LLM (GPT-4o and GPT-4o-mini) in terms of topic splitting and labeling. %% 
 
 \subsection{Data Extracting}
 
@@ -306,39 +326,49 @@ The human coder did not have access to the AI's labeling results to ensure the e
 
 \subsection{Topic Splitting: Performance Comparison}
 
-- gpt-4o-2024-08-06: ~9 hours / 30 USD
-- gpt-4o-mini-2024-07-18: ~6 hours / 1.5 USD
+to Table \ref{table:llm-costs} note that mention that time is approximate depending on network conditions, speed and utilization of OpenAI servers.
+
+\begin{table}
+\tbl{Processing Times and Costs of LLM Models}{
+\begin{tabular}{lcc} \toprule
+\textbf{LLM Model} & \textbf{Processing Time} & \textbf{Cost (USD)} \\ \midrule
+\texttt{gpt-4o-2024-08-06} & Approximately $9$ hours & $31.24$ \\
+\texttt{gpt-4o-mini-2024-07-18} & Approximately $6$ hours & $1.56$ \\ \bottomrule
+\end{tabular}}
+\label{table:llm-costs}
+\end{table}
 
 
-%% F1-Score Results: Present the F1-scores for both human coders and AI (GPT-4o and GPT-4o-mini) for the task of splitting topics. Use tables or graphs to visually compare the F1-scores for different AI models and human coding (e.g., bar graphs or scatter plots). Discuss how these scores reflect the accuracy of AI in detecting and splitting topics compared to human coders. %%
 
-%% Precision and Recall Breakdown (Optional). If relevant, break down the precision and recall scores for AI vs. human coders and discuss their significance. %%
+%% F1-Score Results: Present the F1-scores for both human coders and LLM (GPT-4o and GPT-4o-mini) for the task of splitting topics. Use tables or graphs to visually compare the F1-scores for different LLM models and human coding (e.g., bar graphs or scatter plots). Discuss how these scores reflect the accuracy of LLM in detecting and splitting topics compared to human coders. %%
 
-%% Error Analysis: Analyze where AI and human coders made errors (e.g., false positives, false negatives). Provide examples of common mistakes made by AI or human coders, using specific curricula or topics as illustrations. Discuss possible reasons for discrepancies and potential areas of improvement. %%
+%% Precision and Recall Breakdown (Optional). If relevant, break down the precision and recall scores for LLM vs. human coders and discuss their significance. %%
+
+%% Error Analysis: Analyze where LLM and human coders made errors (e.g., false positives, false negatives). Provide examples of common mistakes made by LLM or human coders, using specific curricula or topics as illustrations. Discuss possible reasons for discrepancies and potential areas of improvement. %%
 
 \subsection{Topic Labeling: Performance Comparison}
 
 See table \ref{table:national-curriculum-topics} in appendix \ref{appendix:national-curriculum-topics} with topics of national curriculum for History.
 
 
-%% Cohen’s Kappa Results: Present the Cohen’s Kappa values for both human-AI agreement and human-human agreement (if applicable), comparing them across different AI models. Provide visual representations (e.g., box plots, heat maps) to highlight any significant differences in agreement levels. Discuss what the Cohen's Kappa values suggest about the consistency of the labeling process for human coders vs. AI models. %%
+%% Cohen’s Kappa Results: Present the Cohen’s Kappa values for both human-LLM agreement and human-human agreement (if applicable), comparing them across different LLM models. Provide visual representations (e.g., box plots, heat maps) to highlight any significant differences in agreement levels. Discuss what the Cohen's Kappa values suggest about the consistency of the labeling process for human coders vs. LLM models. %%
 
 
 \section{Discussion}
 
 
-%% Interpretation of Key Findings: Summarize the most important results, highlighting any notable differences or trends between human coding and AI coding performance. Discuss the implications of these results for future curriculum analysis, particularly in terms of the role of AI in educational research. %%
+%% Interpretation of Key Findings: Summarize the most important results, highlighting any notable differences or trends between human coding and LLM coding performance. Discuss the implications of these results for future curriculum analysis, particularly in terms of the role of LLM in educational research. %%
 
-%% Limitations of the Results: Acknowledge any limitations in the results, such as sample size, potential biases in the dataset, or constraints in the AI models used. %%
+%% Limitations of the Results: Acknowledge any limitations in the results, such as sample size, potential biases in the dataset, or constraints in the LLM models used. %%
 
 - provide in prompt to topic splitting list of possible topics, use vector store
 
-%% Suggestions for Future Research: Suggest areas where AI models could be improved to handle the challenges identified in the study. Propose potential future studies to further assess AI’s applicability in analyzing educational data and curriculum content. %%
+%% Suggestions for Future Research: Suggest areas where LLM models could be improved to handle the challenges identified in the study. Propose potential future studies to further assess LLM’s applicability in analyzing educational data and curriculum content. %%
 
 
 \section{Conclusion}
 
-%% Summary of Findings: Recap the major conclusions drawn from the results, emphasizing the overall performance of AI in comparison to human coding. %%
+%% Summary of Findings: Recap the major conclusions drawn from the results, emphasizing the overall performance of LLM in comparison to human coding. %%
 
 %% Implications for Curriculum Analysis: Briefly mention the broader impact of these findings on automating curriculum analysis and improving the efficiency of educational research. %%
 
