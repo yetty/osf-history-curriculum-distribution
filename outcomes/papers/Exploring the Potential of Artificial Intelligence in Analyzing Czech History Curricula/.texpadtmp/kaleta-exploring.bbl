@@ -1,6 +1,130 @@
 \begin{thebibliography}{}
 
 \bibitem [\protect \citeauthoryear {%
+Braun%
+\ \BBA {} Clarke%
+}{%
+Braun%
+\ \BBA {} Clarke%
+}{%
+{\protect \APACyear {2006}}%
+}]{%
+Braun2006Using}
+\APACinsertmetastar {%
+Braun2006Using}%
+\begin{APACrefauthors}%
+Braun, V.%
+\BCBT {}\ \BBA {} Clarke, V.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2006}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{Using thematic analysis in psychology}} {{Using thematic analysis in psychology}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Qualitative Research in Psychology}{3}{}{77-101}.
+\newblock
+\begin{APACrefURL} \url{https://doi.org/10.1191/1478088706qp063oa} \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1191/1478088706qp063oa} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+De~Paoli%
+}{%
+De~Paoli%
+}{%
+{\protect \APACyear {2023}}%
+}]{%
+DePaoli2023Can}
+\APACinsertmetastar {%
+DePaoli2023Can}%
+\begin{APACrefauthors}%
+De~Paoli, S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{}{}.
+\newblock
+\APACrefbtitle {{Can Large Language Models emulate an inductive Thematic Analysis of semi-structured interviews? An exploration and provocation on the limits of the approach and the model}.} {{Can Large Language Models emulate an inductive Thematic Analysis of semi-structured interviews? An exploration and provocation on the limits of the approach and the model}.}
+\newblock
+\begin{APACrefURL} [{2024-07-23}]\url{https://arxiv.org/abs/2305.13014} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+De~Paoli%
+}{%
+De~Paoli%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+DePaoli2024Thematic}
+\APACinsertmetastar {%
+DePaoli2024Thematic}%
+\begin{APACrefauthors}%
+De~Paoli, S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{}{}.
+\newblock
+\APACrefbtitle {{Thematic Analysis with Large Language Models: does it work with languages other than English? A targeted test in Italian}.} {{Thematic Analysis with Large Language Models: does it work with languages other than English? A targeted test in Italian}.}
+\newblock
+\begin{APACrefURL} [{2024-12-06}]\url{https://arxiv.org/abs/2404.08488} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+De~Paoli%
+\ \BBA {} Mathis%
+}{%
+De~Paoli%
+\ \BBA {} Mathis%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+DePaoli2024Reflections}
+\APACinsertmetastar {%
+DePaoli2024Reflections}%
+\begin{APACrefauthors}%
+De~Paoli, S.%
+\BCBT {}\ \BBA {} Mathis, W\BPBI S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{}{}.
+\newblock
+\APACrefbtitle {{Reflections on Inductive Thematic Saturation as a potential metric for measuring the validity of an inductive Thematic Analysis with LLMs}.} {{Reflections on Inductive Thematic Saturation as a potential metric for measuring the validity of an inductive Thematic Analysis with LLMs}.}
+\newblock
+\begin{APACrefURL} [{2024-12-02}]\url{https://arxiv.org/abs/2401.03239} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Drápal%
+, Westermann%
+\BCBL {}\ \BBA {} Savelka%
+}{%
+Drápal%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+Drapal2023Using}
+\APACinsertmetastar {%
+Drapal2023Using}%
+\begin{APACrefauthors}%
+Drápal, J.%
+, Westermann, H.%
+\BCBL {}\ \BBA {} Savelka, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{}{}.
+\newblock
+\APACrefbtitle {{Using Large Language Models to Support Thematic Analysis in Empirical Legal Studies}.} {{Using Large Language Models to Support Thematic Analysis in Empirical Legal Studies}.}
+\newblock
+\begin{APACrefURL} [{2024-08-23}]\url{https://arxiv.org/abs/2310.18729} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Jireček%
 }{%
 Jireček%
@@ -17,7 +141,7 @@ Jireček, M.%
 \newblock
 \APACrefYearMonthDay{2023{\protect \BCnt {1}}}{}{}.
 \newblock
-{\BBOQ}\APACrefatitle {Proměny výuky dějepisu pohledem analýzy školních vzdělávacích programů} {Proměny výuky dějepisu pohledem analýzy školních vzdělávacích programů}.{\BBCQ}
+{\BBOQ}\APACrefatitle {{Proměny výuky dějepisu pohledem analýzy školních vzdělávacích programů}} {{Proměny výuky dějepisu pohledem analýzy školních vzdělávacích programů}}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Historie -- otázky -- problémy}{12}{}{17-38}.
 \PrintBackRefs{\CurrentBib}
@@ -39,9 +163,9 @@ Jireček, M.%
 \newblock
 \APACrefYearMonthDay{2023{\protect \BCnt {2}}}{}{}.
 \newblock
-{\BBOQ}\APACrefatitle {Třicet let od sametové revoluce (1989-2019) pohledem kurikulárních dokumentů dějepisu} {Třicet let od sametové revoluce (1989-2019) pohledem kurikulárních dokumentů dějepisu}.{\BBCQ}
+{\BBOQ}\APACrefatitle {{Třicet let od sametové revoluce (1989-2019) pohledem kurikulárních dokumentů dějepisu}} {{Třicet let od sametové revoluce (1989-2019) pohledem kurikulárních dokumentů dějepisu}}.{\BBCQ}
 \newblock
-\BIn{} J.~Mihola\ (\BED), \APACrefbtitle {Třicet let svobody, aneb demokracie není samozřejmost.} {Třicet let svobody, aneb demokracie není samozřejmost.}
+\BIn{} J.~Mihola\ (\BED), \APACrefbtitle {{Třicet let svobody, aneb demokracie není samozřejmost}.} {{Třicet let svobody, aneb demokracie není samozřejmost}.}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -64,7 +188,7 @@ Labischová, D.%
 \newblock
 \APACrefYearMonthDay{2016}{}{}.
 \newblock
-{\BBOQ}\APACrefatitle {Problems of school history teaching in the current education system of the {Czech Republic}} {Problems of school history teaching in the current education system of the {Czech Republic}}.{\BBCQ}
+{\BBOQ}\APACrefatitle {{Problems of school history teaching in the current education system of the {Czech Republic}}} {{Problems of school history teaching in the current education system of the {Czech Republic}}}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Klio - Czasopismo Poświęcone Dziejom Polski i Powszechnym}{34}{}{63}.
 \newblock
@@ -74,14 +198,14 @@ Labischová, D.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
-\APACcitebtitle {Rámcový vzdělávací program pro základní vzdělávání}}{%
-\APACcitebtitle {Rámcový vzdělávací program pro základní vzdělávání}}{%
+\APACcitebtitle {{Rámcový vzdělávací program pro základní vzdělávání}}}{%
+\APACcitebtitle {{Rámcový vzdělávací program pro základní vzdělávání}}}{%
 {\protect \APACyear {2023}}%
 }]{%
 RVPZV2023}
 \APACinsertmetastar {%
 RVPZV2023}%
-\APACrefbtitle {Rámcový vzdělávací program pro základní vzdělávání.} {Rámcový vzdělávací program pro základní vzdělávání.}
+\APACrefbtitle {{Rámcový vzdělávací program pro základní vzdělávání}.} {{Rámcový vzdělávací program pro základní vzdělávání}.}
 \newblock
 \APACrefYearMonthDay{2023}{}{}.
 \newblock
