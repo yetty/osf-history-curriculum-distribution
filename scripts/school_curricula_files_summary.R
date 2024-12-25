@@ -1,5 +1,6 @@
 if (!require(pdftools)) install.packages("pdftools")
 library(pdftools)
+library(ggplot2)
 
 # Set the folder path where the PDFs are located
 folder_path <- "data/SVPs" # Replace with your folder path
@@ -79,4 +80,4 @@ ggplot(pdf_dataset_clean, aes(x = NumPages)) +
   )
 
 # Optionally save the plot
-ggsave("curricula_pages_distribution_plot.eps", width = 8, height = 6, device = "eps")
+ggsave("curricula_pages_distribution_plot.pdf", width = 8, height = 6, device = "pdf")
