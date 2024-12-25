@@ -185,6 +185,7 @@ def process_grade(school, grade, ucivo, note=None):
 
         if grade and ucivo:
             writer.writerow([school, grade, note, " - ".join(ucivo)])
+        return
 
         if not ucivo:
             return
