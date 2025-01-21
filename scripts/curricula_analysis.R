@@ -8,7 +8,12 @@ library(readxl)
 library(ggplot2)
 library(multcomp)
 
-load("data/content_with_schools.RData")
+
+
+
+
+
+
 
 
 contingency_table_themes <- table(content_with_schools$grade, content_with_schools$theme)
@@ -19,17 +24,6 @@ unique(content_with_schools$theme)
 
 df_contingency <- as.data.frame(contingency_table_themes)
 # Manually specify the order of themes
-custom_theme_order <- c(
-  "ČLOVĚK V DĚJINÁCH",
-  "POČÁTKY LIDSKÉ SPOLEČNOSTI",
-  "NEJSTARŠÍ CIVILIZACE. KOŘENY EVROPSKÉ KULTURY",
-  "KŘESŤANSTVÍ A STŘEDOVĚKÁ EVROPA",
-  "OBJEVY A DOBÝVÁNÍ. POČÁTKY NOVÉ DOBY",
-  "MODERNIZACE SPOLEČNOSTI",
-  "MODERNÍ DOBA",
-  "ROZDĚLENÝ A INTEGRUJÍCÍ SE SVĚT",
-  "JINÉ"
-)  # Replace with your desired order
 
 # Set the factor levels for the `theme` column to your custom order
 df_contingency$Var2 <- factor(df_contingency$Var2, levels = custom_theme_order)
@@ -40,8 +34,17 @@ ggplot(df_contingency, aes(x = Var1, y = Var2, fill = Freq)) +
   labs(x = "Grade", y = "Theme", fill = "Count", title = "Contingency Table Heatmap") + 
   theme_minimal() + 
   scale_fill_gradient(low = "white", high = "steelblue") +
-  scale_y_discrete(labels = function(x) str_sub(x, 1, 20))  # Trim theme labels to 20 characters
+  scale_y_discrete(labels = function(x) stringr::str_trunc(x, 20, side = "right"))
 
+
+# Step 2: Aggregate relative frequencies across all schools
+average_relative_frequencies <- relative_frequencies %>%
+  group_by(theme) %>%
+  summarise(avg_relative_frequency = mean(relative_frequency, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(avg_relative_frequency))  # Sort by average relative frequency
+
+# View the result
+print(average_relative_frequencies)
 
 
 contingency_table_topics <- table(ucivo_with_schools$rocnik, ucivo_with_schools$topic)

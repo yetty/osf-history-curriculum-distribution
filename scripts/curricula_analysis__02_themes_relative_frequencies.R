@@ -105,3 +105,12 @@ ggsave(
   height = 8.27,                              # A4 height in inches
   units = "in"                                 # Specify units as inches
 )
+
+ggsave(
+  filename = "themes_school_presence_heatmap_sorted.png",  # Output file name
+  plot = relative_school_presence_plot,                          # Use the last generated plot
+  device = "pdf",                              # Save as PDF
+  width = 11.69,                                # A4 width in inches
+  height = 8.27,                              # A4 height in inches
+  units = "in"                                 # Specify units as inches
+)
